@@ -1,0 +1,30 @@
+version: '3'
+services:
+  nginx1:
+    build:
+      context: ./nginx1
+    container_name: nginx1
+    networks:
+      ha_net:
+        ipv4_address: 172.28.0.11
+    cap_add:
+      - NET_ADMIN
+    privileged: true
+
+  nginx2:
+    build:
+      context: ./nginx2
+    container_name: nginx2
+    networks:
+      ha_net:
+        ipv4_address: 172.28.0.12
+    cap_add:
+      - NET_ADMIN
+    privileged: true
+
+networks:
+  ha_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.28.0.0/24
